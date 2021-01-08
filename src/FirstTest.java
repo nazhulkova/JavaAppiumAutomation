@@ -84,6 +84,11 @@ public class FirstTest {
                 "Close button is still present",
                 5
         );
+        waitForElementPresent(
+                By.id("org.wikipedia:id/search_empty_message"),
+                "Cannot find text for empty request",
+                5
+        );
 
     }
 
@@ -129,6 +134,44 @@ public class FirstTest {
                 "Cannot find expected text into the Searching field",
                 5
         );
+    }
+
+    @Test
+    public void testFindArticlesAndCancelSearch()
+    {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text, 'Search…')]"),
+                "Cannot find search input",
+                15,
+                "Quality"
+        );
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Quality']"),
+                "Cannot find result with title Quality",
+                5
+        );
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Quality assurance']"),
+                "Cannot find result with title Quality assurance",
+                5
+        );
+        waitForElementAndClear(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Cannot find search field",
+                5
+        );
+        waitForElementPresent(
+                By.id("org.wikipedia:id/search_empty_message"),
+                "Cannot find empty result text",
+                5
+        );
+
     }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){ //timeoutInSeconds - How time we will bw wail element
