@@ -121,6 +121,16 @@ public class FirstTest {
 
     }
 
+    @Test
+    public void checkTextInSearchingField(){
+        assertElementHasText(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Search Wikipedia",
+                "Cannot find expected text into the Searching field",
+                5
+        );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){ //timeoutInSeconds - How time we will bw wail element
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds); //WebDriverWait is Selenium's method
         wait.withMessage(error_message + "\n");
@@ -161,4 +171,15 @@ public class FirstTest {
      element.clear();
      return element;
     }
+
+    private boolean assertElementHasText(By by, String value, String error_message, long timeoutInSeconds)
+    {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message +"/n");
+        return wait.until(
+                ExpectedConditions.textToBe(by, value)
+        );
+    }
+
+
 }
