@@ -137,8 +137,7 @@ public class FirstTest {
     }
 
     @Test
-    public void testFindArticlesAndCancelSearch()
-    {
+    public void testFindArticlesAndCancelSearch() {
         waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find Search Wikipedia input",
@@ -171,8 +170,39 @@ public class FirstTest {
                 "Cannot find empty result text",
                 5
         );
-
     }
+
+    @Test
+    public void testResultSearchingAndClearRequest()
+    {
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find Search Wikipedia input",
+                5
+        );
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text, 'Search…')]"),
+                "Cannot find search input",
+                15,
+                "Quality"
+        );
+        waitForElementNotPresent(
+                By.id("org.wikipedia:id/search_empty_text"),
+                "There is no searching results",
+                5
+        );
+        waitForElementAndClear(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Cannot find search field",
+                5
+        );
+        waitForElementPresent(
+                By.id("org.wikipedia:id/search_empty_message"),
+                "Cannot find empty result text",
+                5
+        );
+    }
+
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds){ //timeoutInSeconds - How time we will bw wail element
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds); //WebDriverWait is Selenium's method
